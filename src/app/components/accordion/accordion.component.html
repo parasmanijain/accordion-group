@@ -1,0 +1,10 @@
+<div class="accordionPanel">
+    <div class="titleBar" (click)="toggle.emit()">
+    <span class="headerIcon"><i [ngClass]="[icons]"></i></span>
+    <span class="title">{{title}} - Click on + to Expand and - to Collapse</span>
+    <span class="expandCollapseIcon"><i class="fa" [ngClass]="{'fa-plus': !opened, 'fa-minus': opened}"></i></span>
+    </div>
+    <div class="body" [ngClass]="{'hidden': !opened}">
+      <ng-content></ng-content>
+    </div>
+  <div>
