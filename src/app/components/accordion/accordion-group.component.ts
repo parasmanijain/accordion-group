@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'group',
+  selector: 'app-group',
   templateUrl: 'accordion.component.html',
   styleUrls: ['accordion.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush
@@ -18,11 +18,15 @@ export class AccordionGroupComponent {
    */
   @Input() title: string;
 
-  @Input() icons: string;
+  @Input() description; string;
 
+  @Input() icon: string;
+
+  @Input() open: any;
+
+  @Input() close: any;
   /**
    * Emitted when user clicks on group titlebar
-   * @type {EventEmitter<any>}
    */
   @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
 }

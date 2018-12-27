@@ -1,36 +1,43 @@
-import { Component, ContentChildren, QueryList, AfterContentInit } from '@angular/core';
+import { Component, ContentChildren, QueryList, AfterContentInit, Input, OnInit } from '@angular/core';
 import { AccordionGroupComponent } from './accordion-group.component';
 
 @Component({
-  selector: 'accordion',
+  selector: 'app-accordion',
   template: `
     <ng-content></ng-content>
 `,
   styleUrls: ['./accordion.component.css']
 })
-export class AccordionComponent  implements AfterContentInit {
+export class AccordionComponent  implements OnInit, AfterContentInit {
   @ContentChildren(AccordionGroupComponent)
   groups: QueryList<AccordionGroupComponent>;
 
+  @Input() title: any;
+
+  @Input() icon: any;
+
+  @Input() openFirst: boolean;
+
+  @Input() toggle: boolean;
+
+  ngOnInit() {
+  }
   /**
    * Invoked when all children (groups) are ready
    */
   ngAfterContentInit() {
-    // console.log (this.groups);
     // Set active to first element
-    // this.groups.toArray()[0].opened = true;
+    if (this.openFirst) {
+      this.groups.toArray()[0].opened = true;
+    }
     // Loop through all Groups
     this.groups.toArray().forEach((t) => {
       // when title bar is clicked
       // (toggle is an @output event of Group)
       t.toggle.subscribe(() => {
         // Open the group
-        this.toggleGroup(t);
+        this.openGroup(t);
       });
-      /*t.toggle.subscribe((group) => {
-        // Open the group
-        this.openGroup(group);
-      });*/
     });
   }
 
@@ -38,9 +45,15 @@ export class AccordionComponent  implements AfterContentInit {
    * Open an accordion group
    * @param group   Group instance
    */
-  toggleGroup(group) {
-    // close other groups
-    // this.groups.toArray().forEach((t) => t.opened = false);
+  openGroup(group) {
+    if (this.toggle) {
+      // close other groups
+      this.groups.toArray().forEach((t) => {
+        if (t !== group) {
+        t.opened = false;
+        }
+      });
+    }
     // open current group
     group.opened = !group.opened;
   }
