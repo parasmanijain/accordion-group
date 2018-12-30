@@ -9,7 +9,7 @@ import { AccordionComponent } from './components/accordion/accordion.component';
   declarations: [
     AppComponent,
     AccordionGroupComponent,
-    AccordionComponent,
+    AccordionComponent
   ],
   imports: [
     BrowserModule
