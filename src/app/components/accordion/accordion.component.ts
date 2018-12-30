@@ -3,11 +3,10 @@ import { AccordionGroupComponent } from './accordion-group.component';
 
 @Component({
   selector: 'app-accordion',
-  template: `
-    <ng-content></ng-content>
-`,
+  templateUrl: 'accordion.component.html',
   styleUrls: ['./accordion.component.css']
 })
+
 export class AccordionComponent  implements OnInit, AfterContentInit {
   @ContentChildren(AccordionGroupComponent)
   groups: QueryList<AccordionGroupComponent>;

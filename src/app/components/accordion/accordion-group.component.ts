@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-group',
-  templateUrl: 'accordion.component.html',
+  templateUrl: 'accordion-group.component.html',
   styleUrls: ['accordion.component.css'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
