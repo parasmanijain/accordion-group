@@ -1,27 +1,205 @@
 # AccordionGroup
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.3.
+Accordion Group created using Font-Awesome, Bootstrap and Angular 7 to provide collapsible panel utility across different browsers without using any built in utility like jquery.
 
-## Development server
+![alt text](img/chrome-accordion-group.jpg)
+![alt text](img/edge-accordion-group.jpg)
+![alt text](img/firefox-accordion-group.jpg)
+![alt text](img/ie11-accordion-group.jpg)
+![alt text](img/opera-accordion-group.jpg)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Demo
 
-## Code scaffolding
+Checkout the demo on StackBlitz - https://angular7-accordion-group.stackblitz.io/
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Adding the component in your project
 
-## Build
+### Add Components in module
+Import
+`
+import { AccordionGroupComponent } from './components/accordion/accordion-group.component';
+import { AccordionComponent } from './components/accordion/accordion.component';
+`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Declaration
+`
+declarations: [
+     AccordionGroupComponent,
+    AccordionComponent
+  ]
+`
 
-## Running unit tests
+### Add selector in HTML
+```
+<app-accordion [openFirst]="openFirst1" [toggle]="toggle1">
+ <app-group [title]="title1" [description]="description1" [icon]="icon1" [open]="open1" [close]="close1">
+ // form content
+ </app-group>
+ </app-accordion>
+```
+### Selector Properties
+Property `openFirst`, `toggle` accept boolean values.
+Property `title`, `description`, `icon`,`open` and `close` accept string values.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### accordion.component.ts
+``` typescript
+import { Component, ContentChildren, QueryList, AfterContentInit, Input, OnInit } from '@angular/core';
+import { AccordionGroupComponent } from './accordion-group.component';
 
-## Running end-to-end tests
+@Component({
+  selector: 'app-accordion',
+  templateUrl: 'accordion.component.html',
+  styleUrls: ['./accordion.component.css']
+})
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+export class AccordionComponent  implements OnInit, AfterContentInit {
+  @ContentChildren(AccordionGroupComponent)
+  groups: QueryList<AccordionGroupComponent>;
 
-## Further help
+  @Input() title: any;
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+  @Input() icon: any;
+
+  @Input() openFirst: boolean;
+
+  @Input() toggle: boolean;
+
+  ngOnInit() {
+  }
+  /**
+   * Invoked when all children (groups) are ready
+   */
+  ngAfterContentInit() {
+    // Set active to first element
+    if (this.openFirst) {
+      this.groups.toArray()[0].opened = true;
+    }
+    // Loop through all Groups
+    this.groups.toArray().forEach((t) => {
+      // when title bar is clicked
+      // (toggle is an @output event of Group)
+      t.toggle.subscribe(() => {
+        // Open the group
+        this.openGroup(t);
+      });
+    });
+  }
+
+  /**
+   * Open an accordion group
+   * @param group   Group instance
+   */
+  openGroup(group) {
+    if (this.toggle) {
+      // close other groups
+      this.groups.toArray().forEach((t) => {
+        if (t !== group) {
+        t.opened = false;
+        }
+      });
+    }
+    // open current group
+    group.opened = !group.opened;
+  }
+}
+
+```
+
+### accordion.component.html
+``` html
+<ng-content></ng-content>
+```
+
+### accordion.component.css
+``` css
+ .accordionPanel {
+     margin:1em;
+ }
+  .accordionPanel .titleBar {
+    background-color: rgba(102, 102, 102, 1);
+    color:white;
+    width: 100%;
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #666;
+  }
+
+  .accordionPanel .title {
+      margin:5px;
+      font-size:20px;
+  }
+  
+  .accordionPanel .body {
+    padding: 10px;
+  }
+  
+  .accordionPanel .body.hidden {
+    display: none;
+  }
+
+  .expandCollapseIcon {
+      float:right;
+      font-size:20px;
+      margin: 0px 10px;  
+  }
+
+  .headerIcon {
+      float:left;
+      font-size:20px;
+      margin:0px 10px;
+  }
+```
+### accordion-group.component.ts
+``` typescript
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+@Component({
+  selector: 'app-group',
+  templateUrl: 'accordion-group.component.html',
+  styleUrls: ['accordion.component.css']
+})
+export class AccordionGroupComponent {
+
+  /**
+   * If the panel is opened or closed
+   */
+  @Input() opened = false;
+
+  /**
+   * Text to display in the group title bar
+   */
+  @Input() title: string;
+
+  @Input() description; string;
+
+  @Input() icon: string;
+
+  @Input() open: any;
+
+  @Input() close: any;
+  /**
+   * Emitted when user clicks on group titlebar
+   */
+  @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
+}
+
+```
+### accordion-group.component.html
+
+``` html
+<div class="accordionPanel">
+    <div class="titleBar" (click)="toggle.emit()">
+    <span class="headerIcon"><i [ngClass]="[icon]"></i></span>
+    <span class="title">{{title}} - {{description}}</span>
+    <span class="expandCollapseIcon"><i [ngClass]="opened?[close]:[open]"></i></span>
+    </div>
+    <div class="body" [ngClass]="{'hidden': !opened}">
+      <ng-content></ng-content>
+    </div>
+  <div>
+
+```
+## Author
+
+parasmani.jain2208@gmail.com
+
