@@ -148,17 +148,29 @@ export class AccordionComponent  implements OnInit, AfterContentInit {
       font-size:20px;
       margin:0px 10px;
   }
+
+  .open::after {
+    content: "\2295";
+  }
+
+  .close::after {
+    content: "\2296";
+  }
+
+  .icon::after {
+    content: "\1F4C1";
+  }
 ```
 ### accordion-group.component.ts
 ``` typescript
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-group',
   templateUrl: 'accordion-group.component.html',
   styleUrls: ['accordion.component.css']
 })
-export class AccordionGroupComponent {
+export class AccordionGroupComponent implements OnInit{
 
   /**
    * If the panel is opened or closed
@@ -181,7 +193,20 @@ export class AccordionGroupComponent {
    * Emitted when user clicks on group titlebar
    */
   @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
+
+  ngOnInit() {
+    if (!this.open) {
+      this.open = 'open';
+    }
+    if (!this.close) {
+      this.close = 'close';
+    }
+    if (!this.icon) {
+      this.icon = 'icon';
+    }
+  }
 }
+
 
 ```
 ### accordion-group.component.html
