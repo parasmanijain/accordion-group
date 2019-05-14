@@ -1,11 +1,11 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-group',
   templateUrl: 'accordion-group.component.html',
   styleUrls: ['accordion.component.css']
 })
-export class AccordionGroupComponent {
+export class AccordionGroupComponent implements OnInit{
 
   /**
    * If the panel is opened or closed
@@ -28,4 +28,16 @@ export class AccordionGroupComponent {
    * Emitted when user clicks on group titlebar
    */
   @Output() toggle: EventEmitter<any> = new EventEmitter<any>();
+
+  ngOnInit() {
+    if (!this.open) {
+      this.open = 'open';
+    }
+    if (!this.close) {
+      this.close = 'close';
+    }
+    if (!this.icon) {
+      this.icon = 'icon';
+    }
+  }
 }

@@ -34,3 +34,15 @@
       font-size:20px;
       margin:0px 10px;
   }
+
+  .open::after {
+    content: "\2295";
+  }
+
+  .close::after {
+    content: "\2296";
+  }
+
+  .icon::after {
+    content: "\1F4C1";
+  }
