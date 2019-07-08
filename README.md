@@ -1,6 +1,6 @@
 # AccordionGroup
 
-Accordion Group created using Angular 7 to provide collapsible panel utility across different browsers without using any built in library like jquery or bootstrap. Moreover it provides the user to override default html icons using some other libraries like font-awesome.
+Accordion Group created using Angular 8 to provide collapsible panel utility across different browsers without using any built in library like jquery or bootstrap. Moreover it provides the user to override default html icons using some other libraries like font-awesome.
 
 ![alt text](img/chrome-accordion-group.jpg)
 ![alt text](img/edge-accordion-group.jpg)
