@@ -10,7 +10,7 @@ Accordion Group created using Angular 8 to provide collapsible panel utility acr
 
 ## Demo
 
-Checkout the demo on StackBlitz - https://angular7-accordion-group.stackblitz.io/
+Checkout the demo on StackBlitz - https://angular8-accordion-group.stackblitz.io/
 
 ## Adding the component in your project
 
